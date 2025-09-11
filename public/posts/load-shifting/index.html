@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=57830&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Load Shifting Calculator - Ana.logY</title>
+  <meta property="og:title" content="Load Shifting Calculator - Ana.logY" />
+  <meta name="twitter:title" content="Load Shifting Calculator - Ana.logY" />
+  <meta name="description" content="Interactive Energy Shifting Calculator to optimize costs and CO₂ savings
+One of the biggest challenges for renewable energy adoption is that demand doesn’t always match supply.
+
+Solar peaks at midday, but residential consumption peaks in the evening.
+Wind can be abundant at night, but industry runs during the day.
+
+Utilities and customers both struggle to see how much money or CO₂ could be saved by simply shifting energy usage from one time to another.">
+  <meta property="og:description" content="Interactive Energy Shifting Calculator to optimize costs and CO₂ savings
+One of the biggest challenges for renewable energy adoption is that demand doesn’t always match supply.
+
+Solar peaks at midday, but residential consumption peaks in the evening.
+Wind can be abundant at night, but industry runs during the day.
+
+Utilities and customers both struggle to see how much money or CO₂ could be saved by simply shifting energy usage from one time to another.">
+  <meta name="twitter:description" content="Interactive Energy Shifting Calculator to optimize costs and CO₂ savings
+One of the biggest challenges for renewable energy adoption is that demand doesn’t always match supply.
+
+Solar peaks at midday, …">
+  <meta name="author" content="Abhit"/>
+  <meta property="og:site_name" content="Ana.logY" />
+  <meta property="og:url" content="http://localhost:57830/posts/load-shifting/" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.148.2">
+  <link rel="stylesheet" href="/css/style.css" media="all" />
+  <link rel="stylesheet" href="/css/style-dark.css" media="all and (prefers-color-scheme: dark)" />
+
+  <link rel="stylesheet" href="/css/syntax.css" media="all" />
+  <link rel="stylesheet" href="/css/custom.css" media="all" />
+
+  <script src="/js/script.js"></script>
+  <script src="/js/custom.js"></script>
+  <script defer src="/fontawesome/all.min.js"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="site-navi">
+    <h1 class="site-title"><a href="/">Ana.logY</a></h1>
+    <ul class="site-navi-items">
+      <li class="site-navi-item-categories"><a href="/categories/" title="Categories">Categories</a></li>
+      <li class="site-navi-item-tags"><a href="/tags/" title="Tags">Tags</a></li>
+      <li class="site-navi-item-archives"><a href="/archives/" title="Archives">Archives</a></li>
+      <li class="site-navi-item-about"><a href="/about/" title="About">About</a></li>
+    </ul>
+  </nav>
+</header>
+<hr class="site-header-bottom">
+
+  <div class="main" role="main">
+    <article class="article">
+      
+      
+      <h1 class="article-title">Load Shifting Calculator</h1>
+      
+      <hr class="article-title-bottom">
+      <ul class="article-meta">
+        <li class="article-meta-date"><time>September 1, 2025</time></li>
+        <li class="article-meta-categories">
+          <a href="/categories/projects/">
+            <i class="fa-solid fa-folder"></i>
+            projects
+          </a>&nbsp;
+        </li>
+        <li class="article-meta-categories">
+          <a href="/categories/case-studies/">
+            <i class="fa-solid fa-folder"></i>
+            case-studies
+          </a>&nbsp;
+        </li>
+        <li class="article-meta-tags">
+          <a href="/tags/energy/">
+            <i class="fa-solid fa-tag"></i>
+            energy
+          </a>&nbsp;
+        </li>
+      </ul>
+      
+<aside class="toc">
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#modeling-the-problem">Modeling the Problem</a></li>
+    <li><a href="#the-brick--wall-analogy">The Brick &amp; Wall Analogy</a></li>
+    <li><a href="#the-algorithm-three-stage-optimization">The Algorithm: Three-Stage Optimization</a>
+      <ul>
+        <li><a href="#javascript-implementation">JavaScript Implementation</a></li>
+      </ul>
+    </li>
+    <li><a href="#building-the-interactive-tool">Building the Interactive Tool</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#reflections">Reflections</a></li>
+  </ul>
+</nav>
+</aside>
+      <h1 id="interactive-energy-shifting-calculator-to-optimize-costs-and-co-savings">Interactive Energy Shifting Calculator to optimize costs and CO₂ savings</h1>
+<p>One of the biggest challenges for renewable energy adoption is that <strong>demand doesn’t always match supply</strong>.</p>
+<ul>
+<li>Solar peaks at midday, but residential consumption peaks in the evening.</li>
+<li>Wind can be abundant at night, but industry runs during the day.</li>
+</ul>
+<p>Utilities and customers both struggle to see <em>how much money or CO₂ could be saved</em> by simply shifting energy usage from one time to another.</p>
+<p>We wanted to solve this problem with a simple, visual tool:</p>
+<ul>
+<li>That would instantly calculate <strong>optimal costs and CO₂ savings</strong> if energy consumption were shifted.</li>
+<li>And something that would make a technical concept — demand-side response — accessible to a <strong>non-technical audience</strong>.</li>
+</ul>
+<hr>
+<h2 id="modeling-the-problem">Modeling the Problem</h2>
+<p>Before building the tool, we needed a clear <strong>model of the problem</strong>.</p>
+<ul>
+<li><strong>Load Profile</strong>: A 24-hour vector showing how much electricity is consumed each hour.</li>
+<li><strong>Flexibility Profile</strong>: How much consumption can be shifted up or down at each hour. Some hours may have zero flexibility, others might allow 10–20%.</li>
+<li><strong>Marginal Cost</strong>: The price of generating 1 extra kWh in a given hour</li>
+<li><strong>Marginal CO₂</strong>: The emissions from generating that same extra kWh, depending on which power plants are online.</li>
+</ul>
+<p>The challenge:</p>
+<ul>
+<li>Given these profiles, what is the <strong>Change Profile</strong> (when to reduce, when to increase consumption) that results in the lowest overall cost, emissions, or a balance of both?</li>
+<li>And how can we compute this quickly enough to show results <em>live</em> in a browser?</li>
+</ul>
+<hr>
+<h2 id="the-brick--wall-analogy">The Brick &amp; Wall Analogy</h2>
+<p>To explain this problem in a way that anyone could understand, we developed the <strong>“brick and wall” analogy</strong>.</p>
+<ul>
+<li>Think of daily electricity demand as a <strong>wall with 24 columns</strong> — one for each hour of the day.</li>
+<li>Each column must be filled up to a certain height (the load).</li>
+<li>To fill the wall, we have a set of <strong>bricks</strong> — each brick representing a power plant.
+<ul>
+<li>The <strong>size</strong> of the brick = how much the plant can generate.</li>
+<li>The <strong>color</strong> = which plant it comes from (nuclear, coal, solar, gas, etc.).</li>
+<li>The <strong>weight</strong> (or cost per unit) = how expensive it is to use.</li>
+<li>The <strong>quality</strong> = its CO₂ emissions per unit.</li>
+</ul>
+</li>
+</ul>
+<p>The optimization problem becomes:</p>
+<ul>
+<li>How do we fill the wall with the available bricks, while respecting minimum/maximum limits, flexibility rules, and costs?</li>
+<li>Which bricks do we use first if we want to minimize cost?</li>
+<li>Which bricks do we use if we want to minimize CO₂?</li>
+<li>And how does the result change if we consider a trade-off between the two?</li>
+</ul>
+<p>This analogy made a complex optimization problem <strong>visual and intuitive</strong>.<br>
+It was also the basis for the <strong>interactive tool</strong>, where users could actually <em>see</em> the effect of shifting consumption as colored bars in a chart.</p>
+<h2 id="the-algorithm-three-stage-optimization">The Algorithm: Three-Stage Optimization</h2>
+<p>Once the model was clear, we needed an algorithm that could compute the optimal allocation of demand quickly and transparently.<br>
+We designed a <strong>three-stage optimization process</strong>:</p>
+<ol>
+<li>
+<p><strong>Stage 1 – Minimum requirements</strong></p>
+<ul>
+<li>Every power plant has a minimum output (they can’t simply turn off).</li>
+<li>We first filled each hour’s load with the mandatory minimums.</li>
+</ul>
+</li>
+<li>
+<p><strong>Stage 2 – Flexibility constraints</strong></p>
+<ul>
+<li>We then allocated demand up to the <strong>flexibility limits</strong> for each hour.</li>
+<li>This respected the user-defined flexibility profile (how much load can be shifted up or down).</li>
+</ul>
+</li>
+<li>
+<p><strong>Stage 3 – Cost- and CO₂-based allocation</strong></p>
+<ul>
+<li>For the remaining demand, we selected the <strong>most cost-effective</strong> or <strong>lowest-emission</strong> bricks first.</li>
+<li>The algorithm could optimize for <strong>cost</strong>, <strong>CO₂</strong>, or a <strong>weighted balance of both</strong>, depending on user input.</li>
+</ul>
+</li>
+</ol>
+<h3 id="javascript-implementation">JavaScript Implementation</h3>
+<p>The algorithm was implemented in <strong>JavaScript</strong> so it could run entirely in the browser.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">optimize</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">optimize1</span>(); <span style="color:#75715e">// Stage 1: mandatory minimums
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">optimize2</span>(); <span style="color:#75715e">// Stage 2: fill up to flexibility profile
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">optimize3</span>(); <span style="color:#75715e">// Stage 3: allocate cheapest/cleanest remaining
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">updateResults</span>(); <span style="color:#75715e">// prepare stacked bar data for visualization
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h2 id="building-the-interactive-tool">Building the Interactive Tool</h2>
+<p>We developed an <strong>interactive user interface</strong> where clients could play with inputs and instantly see results.</p>
+<ul>
+<li>Implemented entirely in <strong>JavaScript + web technologies</strong>, so it could run in any browser without setup.</li>
+<li>Input fields allowed users to provide the data, such as  Load profile, Flexibility profile and costs</li>
+<li>The tool highlighted the <strong>recommended shifts</strong>:
+<ul>
+<li>Hours where usage should be <strong>reduced</strong> (most expensive).</li>
+<li>Hours where usage should be <strong>increased</strong> (cheapest/cleanest).</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p>This visualization made it clear, at a glance, where the biggest savings opportunities were.</p>
+<hr>
+<h2 id="results">Results</h2>
+<p>The results consistently showed that even modest demand shifts could lead to significant benefits:</p>
+<ul>
+<li><strong>10–20% potential cost savings</strong> in typical case studies.</li>
+<li>Noticeable reductions in <strong>CO₂ emissions</strong>, especially when shifting demand into hours with high renewable availability.</li>
+<li>A more intuitive understanding for clients of how <strong>flexibility translates to value</strong>.</li>
+</ul>
+<p>This made the business case for demand-side management <strong>tangible, interactive, and persuasive</strong>.</p>
+<h2 id="reflections">Reflections</h2>
+<p>Looking back, the Energy Shifting Calculator was more than just a coding exercise — it was about making <strong>complex energy concepts simple and actionable</strong>.</p>
+<p>A few key takeaways stood out:</p>
+<ul>
+<li><strong>Invent &amp; Simplify</strong>: By turning a dense optimization problem into the “brick &amp; wall” analogy, we created a model that anyone, from engineers to clients, could understand.</li>
+<li><strong>Visualization matters</strong>: A single interactive chart explained savings in seconds, far better than spreadsheets or equations ever could.</li>
+<li><strong>Bridging two worlds</strong>: This project showed how <strong>software engineering and energy systems</strong> can complement each other. Clean, modular code powered a tool that directly influenced how customers thought about renewable integration and flexibility.</li>
+</ul>
+<p>Most importantly, this project taught me that <strong>impact doesn’t always require massive infrastructure</strong> — sometimes, a simple interactive tool can shift perspectives, drive decisions, and pave the way for smarter, greener energy systems.</p>
+
+    </article>
+
+    
+<ul class="article-share">
+  
+  <li>
+    <a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=http://localhost:57830/posts/load-shifting/" target="_blank" rel="noopener" aria-label="Facebook">
+      <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <i class="fa-brands fa-facebook-f"></i></div>Facebook</div>
+    </a>
+  </li>
+
+  
+  
+
+  
+  <li>
+    <a class="resp-sharing-button__link" href="https://x.com/intent/tweet/?text=Load%20Shifting%20Calculator%20-%20Ana.logY&amp;url=http://localhost:57830/posts/load-shifting/" target="_blank" rel="noopener" aria-label="Twitter">
+      <div class="resp-sharing-button resp-sharing-button--x resp-sharing-button--medium"><i class="fa-brands fa-x-twitter"></i></div>
+    </a>
+  </li>
+
+  
+  
+ 
+</ul>
+
+
+    <ul class="pager article-pager">
+      <li class="pager-newer">
+          <a href="/posts/energy-monitoring/" data-toggle="tooltip" data-placement="top" title="Real-Time Energy Monitoring">&lt; Newer</a>
+      </li>
+      <li class="pager-older pager-noitem">Older &gt;</li>
+    </ul>
+  </div>
+
+
+<div class="site-footer">
+  <div class="copyright">&copy; Copyright 2025 Abhit</div>
+  <ul class="site-footer-items">
+    <li class="site-footer-item-about"><a href="/about/" title="About">About</a></li>
+  </ul>
+  <div class="powerdby">
+    Powered by <a href="https://gohugo.io/">Hugo</a> and <a href="https://github.com/taikii/whiteplain">Whiteplain</a>
+  </div>
+</div>
+
+
+</body>
+</html>

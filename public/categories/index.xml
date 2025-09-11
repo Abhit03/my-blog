@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ana.logY</title>
+    <link>http://localhost:57830/categories/</link>
+    <description>Recent content on Ana.logY</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>abhit95@gmail.com (Abhit)</managingEditor>
+    <webMaster>abhit95@gmail.com (Abhit)</webMaster>
+    <copyright>&amp;copy; Copyright 2025 Abhit</copyright>
+    <lastBuildDate>Tue, 09 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:57830/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Case-Studies</title>
+      <link>http://localhost:57830/categories/case-studies/</link>
+      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:57830/categories/case-studies/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Projects</title>
+      <link>http://localhost:57830/categories/projects/</link>
+      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:57830/categories/projects/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

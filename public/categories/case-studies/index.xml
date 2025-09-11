@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Case-Studies on Ana.logY</title>
+    <link>http://localhost:57830/categories/case-studies/</link>
+    <description>Recent content in Case-Studies on Ana.logY</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>abhit95@gmail.com (Abhit)</managingEditor>
+    <webMaster>abhit95@gmail.com (Abhit)</webMaster>
+    <copyright>&amp;copy; Copyright 2025 Abhit</copyright>
+    <lastBuildDate>Tue, 09 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:57830/categories/case-studies/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Demand-Side Management Platform</title>
+      <link>http://localhost:57830/posts/demand-side-management/</link>
+      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:57830/posts/demand-side-management/</guid>
+      <description>&lt;p&gt;Electricity grids face a growing challenge: &lt;strong&gt;demand rarely matches supply&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Evening peaks arrive when solar output is low.&lt;/li&gt;&#xA;&lt;li&gt;Midday often brings excess solar, but demand is modest.&lt;br&gt;&#xA;Traditionally, utilities bridge this gap with fossil-based backup plants — costly and carbon-intensive.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;As renewables scale up, the smarter solution is &lt;strong&gt;demand-side management (DSM)&lt;/strong&gt;: shifting when and how people use energy. Instead of treating consumers as passive users, we can &lt;strong&gt;engage them directly to help balance the grid&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>From Sensors to Smart Grids</title>
+      <link>http://localhost:57830/posts/from-sensors-to-smart-grids/</link>
+      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:57830/posts/from-sensors-to-smart-grids/</guid>
+      <description>&lt;p&gt;The transition to renewable energy isn’t just about building more wind turbines or solar farms.&lt;br&gt;&#xA;It’s equally about &lt;strong&gt;making demand flexible&lt;/strong&gt; so that consumption can follow the rhythm of renewable supply.&lt;/p&gt;&#xA;&lt;p&gt;At Shared Electric GmbH, we had the opportunity to work on three projects that explored this idea from different angles:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Building an &lt;strong&gt;IoT prototype&lt;/strong&gt; to measure and transmit electricity usage.&lt;/li&gt;&#xA;&lt;li&gt;Developing an &lt;strong&gt;interactive shifting calculator&lt;/strong&gt; to demonstrate the value of load flexibility.&lt;/li&gt;&#xA;&lt;li&gt;Designing a &lt;strong&gt;demand-side management platform&lt;/strong&gt; that puts consumers directly in the loop.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Together, they tell a story of how technology can help bridge the gap between consumers, utilities, and the grid.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Real-Time Energy Monitoring</title>
+      <link>http://localhost:57830/posts/energy-monitoring/</link>
+      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:57830/posts/energy-monitoring/</guid>
+      <description>&lt;p&gt;While working at a renewable energy startup, we set out to answer a key question:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;How can we make electricity use easier to see, cheaper to track, and more useful for both households and utilities?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Most utilities don’t get detailed, real-time information about how people use electricity. Without this, it’s harder to match renewable energy supply with demand, often leading to costly or polluting backup power. To address this, we built a simple, low-cost IoT prototype that could monitor household electricity use in real time and send the data to the cloud. This data could then be used to manage energy demand better and support a cleaner, more reliable grid.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Load Shifting Calculator</title>
+      <link>http://localhost:57830/posts/load-shifting/</link>
+      <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:57830/posts/load-shifting/</guid>
+      <description>&lt;h1 id=&#34;interactive-energy-shifting-calculator-to-optimize-costs-and-co-savings&#34;&gt;Interactive Energy Shifting Calculator to optimize costs and CO₂ savings&lt;/h1&gt;&#xA;&lt;p&gt;One of the biggest challenges for renewable energy adoption is that &lt;strong&gt;demand doesn’t always match supply&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Solar peaks at midday, but residential consumption peaks in the evening.&lt;/li&gt;&#xA;&lt;li&gt;Wind can be abundant at night, but industry runs during the day.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Utilities and customers both struggle to see &lt;em&gt;how much money or CO₂ could be saved&lt;/em&gt; by simply shifting energy usage from one time to another.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
