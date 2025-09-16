@@ -2,42 +2,91 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ana.logY</title>
-    <link>http://localhost:57830/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content on Ana.logY</description>
     <generator>Hugo</generator>
     <language>en</language>
     <managingEditor>abhit95@gmail.com (Abhit)</managingEditor>
     <webMaster>abhit95@gmail.com (Abhit)</webMaster>
     <copyright>&amp;copy; Copyright 2025 Abhit</copyright>
-    <lastBuildDate>Tue, 09 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:57830/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Demand-Side Management Platform</title>
-      <link>http://localhost:57830/posts/demand-side-management/</link>
-      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
-      <guid>http://localhost:57830/posts/demand-side-management/</guid>
-      <description>&lt;p&gt;Electricity grids face a growing challenge: &lt;strong&gt;demand rarely matches supply&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Evening peaks arrive when solar output is low.&lt;/li&gt;&#xA;&lt;li&gt;Midday often brings excess solar, but demand is modest.&lt;br&gt;&#xA;Traditionally, utilities bridge this gap with fossil-based backup plants — costly and carbon-intensive.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;As renewables scale up, the smarter solution is &lt;strong&gt;demand-side management (DSM)&lt;/strong&gt;: shifting when and how people use energy. Instead of treating consumers as passive users, we can &lt;strong&gt;engage them directly to help balance the grid&lt;/strong&gt;.&lt;/p&gt;</description>
+      <title>Computing for Industrial Control Systems</title>
+      <link>http://localhost:1313/posts/cern-ics/connecting-the-dots/</link>
+      <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-ics/connecting-the-dots/</guid>
+      <description>&lt;h3 id=&#34;the-challenge-in-cerns-technical-infrastructure&#34;&gt;The challenge in CERN’s technical infrastructure&lt;/h3&gt;&#xA;&lt;p&gt;CERN operates thousands of devices like programmable logic controllers (PLCs), power supplies, cooling and ventilation units, and other control equipment that keep the accelerator complex running safely and efficiently.  As the number and diversity of devices grew, so did the challenges:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;How can operators monitor such a large, heterogeneous infrastructure intuitively?&lt;/li&gt;&#xA;&lt;li&gt;How can advanced computing approaches like edge computing be integrated into this environment?&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;My work in the Industrial Control Systems group within the beams department at CERN addressed these questions across two fronts:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Monitoring Control Infrasturcuture at CERN</title>
+      <link>http://localhost:1313/posts/cern-ics/device-monitoring/</link>
+      <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-ics/device-monitoring/</guid>
+      <description>&lt;p&gt;At CERN, the operation of accelerators and experiments depends on thousands of technical devices working together. These range from:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;PLCs (programmable logic controllers):&lt;/strong&gt; industrial computers that run control logic,&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Power supplies:&lt;/strong&gt; that feed magnets and detectors,&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Front-end controllers:&lt;/strong&gt; that handle communication between equipment and higher-level systems.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;These devices are supplied by many different vendors, such as Siemens, Schneider, and Beckhoff, and each vendor provides its own way of reporting the device’s status or error messages.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Deploying Edge Computing Platform on K8s</title>
+      <link>http://localhost:1313/posts/cern-ics/industrial-edge-management/</link>
+      <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-ics/industrial-edge-management/</guid>
+      <description>&lt;p&gt;Imagine a factory or laboratory full of machines, each with its own sensors and controllers. Traditionally, all data from these devices is sent back to central servers for processing, but this can create delays and bottlenecks. &lt;strong&gt;Industrial Edge computing&lt;/strong&gt; changes this by running applications directly close to the machines.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Control Algorithm on Edge</title>
+      <link>http://localhost:1313/posts/cern-ics/model-predictive-control/</link>
+      <pubDate>Sat, 07 Oct 2023 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-ics/model-predictive-control/</guid>
+      <description>&lt;p&gt;At CERN, large technical systems such as cooling plants, ventilation systems, and safety installations must operate continuously around the clock. These systems are controlled by programmable logic controllers (PLCs). PLCs are specialized industrial computers designed to execute the same instructions continuously and reliably, often for years without interruption. Built with safety and stability in mind, they serve as the backbone of industrial automation.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Data Certification: Human Workflows to Automation</title>
+      <link>http://localhost:1313/posts/cern-cms/connecting-the-dots/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-cms/connecting-the-dots/</guid>
+      <description>&lt;p&gt;At CERN’s CMS experiment, one of the largest particle physics experiments in the world, the &lt;strong&gt;tracker detector&lt;/strong&gt; records the paths of particles created during proton collisions. To make sure the data is reliable for physics studies, CMS uses a process called &lt;strong&gt;Data Quality Monitoring (DQM)&lt;/strong&gt; followed by &lt;strong&gt;certification&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Machine Learning Playground</title>
+      <link>http://localhost:1313/posts/cern-cms/ml-playground/</link>
+      <pubDate>Fri, 04 Mar 2022 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-cms/ml-playground/</guid>
+      <description>&lt;p&gt;In the CMS experiment at CERN, huge amounts of collision data are collected every day. To make sure this data can be trusted for physics analyses, CMS relies on a process called &lt;strong&gt;Data Quality Monitoring (DQM)&lt;/strong&gt;.  The DQM software looks at raw detector data and produces simple &lt;strong&gt;summaries&lt;/strong&gt; called &lt;em&gt;monitor elements&lt;/em&gt; which include:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Histograms of the sensor signals.&lt;/li&gt;&#xA;&lt;li&gt;Basic statistics about detector performance.&lt;/li&gt;&#xA;&lt;li&gt;Plots that help spot unusual behavior.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Operators, known as &lt;strong&gt;shifters&lt;/strong&gt;, and more experienced supervisors (shift leaders) examine these outputs using a web interface called the &lt;strong&gt;DQMGUI&lt;/strong&gt;. Based on what they see, they make a final &lt;strong&gt;certification decision&lt;/strong&gt; about whether a dataset is good enough for physics analysis. These results are stored in the &lt;strong&gt;Run Registry&lt;/strong&gt;, the official database of certified data.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Certifying Data from Tracker Detector</title>
+      <link>http://localhost:1313/posts/cern-cms/certification-helper/</link>
+      <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/cern-cms/certification-helper/</guid>
+      <description>&lt;p&gt;At CERN, the CMS experiment has a detector made up of many sub-detectors. One of the most important is the &lt;strong&gt;tracker&lt;/strong&gt;, which works like a giant digital camera that records the paths of charged particles created in collisions. The tracker produces an enormous amount of data, and for physics analyses to be reliable, this data must be checked carefully for quality.&lt;/p&gt;&#xA;&lt;p&gt;This is where the &lt;strong&gt;Data Quality Monitoring (DQM)&lt;/strong&gt; system comes in. The DQM software looks at the raw detector output and generates simplified summaries, known as &lt;em&gt;monitor elements&lt;/em&gt;. These include:&lt;/p&gt;</description>
     </item>
     <item>
       <title>From Sensors to Smart Grids</title>
-      <link>http://localhost:57830/posts/from-sensors-to-smart-grids/</link>
-      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
-      <guid>http://localhost:57830/posts/from-sensors-to-smart-grids/</guid>
-      <description>&lt;p&gt;The transition to renewable energy isn’t just about building more wind turbines or solar farms.&lt;br&gt;&#xA;It’s equally about &lt;strong&gt;making demand flexible&lt;/strong&gt; so that consumption can follow the rhythm of renewable supply.&lt;/p&gt;&#xA;&lt;p&gt;At Shared Electric GmbH, we had the opportunity to work on three projects that explored this idea from different angles:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Building an &lt;strong&gt;IoT prototype&lt;/strong&gt; to measure and transmit electricity usage.&lt;/li&gt;&#xA;&lt;li&gt;Developing an &lt;strong&gt;interactive shifting calculator&lt;/strong&gt; to demonstrate the value of load flexibility.&lt;/li&gt;&#xA;&lt;li&gt;Designing a &lt;strong&gt;demand-side management platform&lt;/strong&gt; that puts consumers directly in the loop.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Together, they tell a story of how technology can help bridge the gap between consumers, utilities, and the grid.&lt;/p&gt;</description>
+      <link>http://localhost:1313/posts/shared-electric/sensors-to-smart-grids/</link>
+      <pubDate>Sun, 11 Dec 2016 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/shared-electric/sensors-to-smart-grids/</guid>
+      <description>&lt;p&gt;The transition to renewable energy is not only about adding more wind turbines or solar farms. It also requires making demand more flexible so that consumption can adjust to the availability of renewable power. At Shared Electric GmbH, I worked on three interconnected projects that demonstrated demand flexibility in action:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Building a low-cost &lt;a href=&#34;http://localhost:1313/posts/shared-electric/energy-monitoring&#34;&gt;IoT device&lt;/a&gt; to measure household consumption.&lt;/li&gt;&#xA;&lt;li&gt;Developing an &lt;a href=&#34;http://localhost:1313/posts/shared-electric/load-shifting&#34;&gt;interactive tool&lt;/a&gt; to show the value of load flexibility.&lt;/li&gt;&#xA;&lt;li&gt;Designing a &lt;a href=&#34;http://localhost:1313/posts/shared-electric/demand-side-management&#34;&gt;demand-side management platform&lt;/a&gt; to connect utilities and consumers.&#xA;Together, these projects demonstrated how technology can link consumers, utilities, and the grid to create smarter, cleaner energy systems.&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>Managing Energy Demand</title>
+      <link>http://localhost:1313/posts/shared-electric/demand-side-management/</link>
+      <pubDate>Sun, 09 Oct 2016 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/shared-electric/demand-side-management/</guid>
+      <description>&lt;p&gt;Electricity grids face a growing challenge: demand rarely matches supply. Evening peaks arrive just as solar output drops, while midday often brings excess solar generation when demand is modest. Traditionally, utilities have bridged this gap with fossil fuel plants, an approach that is both costly and carbon-intensive. As renewable energy continues to scale, a smarter path is emerging in the form of demand-side management (DSM). By &lt;a href=&#34;http://localhost:1313/posts/shared-electric/load-shifting&#34;&gt;shifting&lt;/a&gt;  when and how people use energy, DSM helps bring demand closer to supply. Instead of treating consumers as passive users, it engages them directly in balancing the grid.&lt;/p&gt;&#xA;&lt;p&gt;While DSM is effective in theory, people need to be actively involved to make it work at scale. At Shared Electric, that became our starting point for building a pilot system called Engaze. It enabled utilities to request small shifts in energy usage while engaging consumers through timely nudges via app notifications. The system served as a testbed to demonstrate how behavioral demand response could work in practice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Interactive Load Shifting Tool</title>
+      <link>http://localhost:1313/posts/shared-electric/load-shifting/</link>
+      <pubDate>Fri, 08 Apr 2016 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/shared-electric/load-shifting/</guid>
+      <description>&lt;p&gt;Electricity powers nearly everything we do, yet most of us rarely think about when we use it. Behind the scenes, demand rises and falls every hour, and the grid works constantly to keep supply in balance. What remains invisible to households are the timing, costs, and emissions, the factors that hold the key to making energy both cheaper and cleaner.&lt;/p&gt;&#xA;&lt;p&gt;Imagine reducing your electricity bill and cutting CO₂ emissions simply by running your washing machine a few hours later. Take laundry as an example: shifting a wash cycle from the busy 6 pm slot to 3 pm not only leverages solar generation and lower costs but also lightens the evening demand on the grid. The result is real savings for households and a lighter footprint on the environment. When scaled across millions of homes, the collective impact becomes significant. The real challenge, however, lies in making these benefits visible, as most utilities and consumers rarely recognize just how much money and carbon can be saved by shifting demand.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Real-Time Energy Monitoring</title>
-      <link>http://localhost:57830/posts/energy-monitoring/</link>
-      <pubDate>Tue, 09 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
-      <guid>http://localhost:57830/posts/energy-monitoring/</guid>
-      <description>&lt;p&gt;While working at a renewable energy startup, we set out to answer a key question:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;How can we make electricity use easier to see, cheaper to track, and more useful for both households and utilities?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Most utilities don’t get detailed, real-time information about how people use electricity. Without this, it’s harder to match renewable energy supply with demand, often leading to costly or polluting backup power. To address this, we built a simple, low-cost IoT prototype that could monitor household electricity use in real time and send the data to the cloud. This data could then be used to manage energy demand better and support a cleaner, more reliable grid.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Load Shifting Calculator</title>
-      <link>http://localhost:57830/posts/load-shifting/</link>
-      <pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
-      <guid>http://localhost:57830/posts/load-shifting/</guid>
-      <description>&lt;h1 id=&#34;interactive-energy-shifting-calculator-to-optimize-costs-and-co-savings&#34;&gt;Interactive Energy Shifting Calculator to optimize costs and CO₂ savings&lt;/h1&gt;&#xA;&lt;p&gt;One of the biggest challenges for renewable energy adoption is that &lt;strong&gt;demand doesn’t always match supply&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Solar peaks at midday, but residential consumption peaks in the evening.&lt;/li&gt;&#xA;&lt;li&gt;Wind can be abundant at night, but industry runs during the day.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Utilities and customers both struggle to see &lt;em&gt;how much money or CO₂ could be saved&lt;/em&gt; by simply shifting energy usage from one time to another.&lt;/p&gt;</description>
+      <link>http://localhost:1313/posts/shared-electric/energy-monitoring/</link>
+      <pubDate>Sat, 16 Jan 2016 00:00:00 +0000</pubDate><author>abhit95@gmail.com (Abhit)</author>
+      <guid>http://localhost:1313/posts/shared-electric/energy-monitoring/</guid>
+      <description>&lt;p&gt;Modern energy grids are getting smarter, yet they still lack a key aspect: real-time data on household electricity use. Without it, much of the renewable energy ends up wasted, and the grid has to rely on fossil fuels during peak hours. While working at &lt;a href=&#34;https://sharedelectric.com/&#34;&gt;Shared Electric GmbH&lt;/a&gt;, a renewable energy startup, &lt;a href=&#34;https://www.shaazahm.com/&#34;&gt;Shaaz&lt;/a&gt; and I built a lightweight IoT device to make electricity monitoring accessible and affordable for households and utilities.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

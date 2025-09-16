@@ -1,0 +1,45 @@
+{{ define "main" }}
+  <div class="breadcrumb">Archives</div>
+  <div class="main" role="main">
+    {{/* Group all regular pages by YEAR (newest year first) */}}
+    {{ $groups := sort ((.Site.RegularPages).GroupByDate "2006") "Key" "desc" }}
+    <section class="archives">
+      <ul>
+        {{- range $groups }}
+          <li class="archives-month">{{ .Key }}</li>
+          <li class="archives-monthly-container">
+            {{/* list posts within the year, newest first */}}
+            {{- range .Pages.ByDate.Reverse }}
+              <ul>
+                <li class="archives-item">
+                  <a href="{{ .Permalink | relURL }}">{{ .Title }}</a>
+                  <ul class="taxonomies">
+                    {{- with .Params.categories }}
+                      {{- range . }}
+                        <li class="taxonomies-item">
+                          <a href="{{ "/" | relURL }}categories/{{ . | urlize }}/">
+                            <i class="fa-solid fa-folder"></i>{{ . }}
+                          </a>
+                        </li>
+                      {{- end }}
+                    {{- end }}
+                    {{- with .Params.tags }}
+                      {{- range . }}
+                        <li class="taxonomies-item">
+                          <a href="{{ "/" | relURL }}tags/{{ . | urlize }}/">
+                            <i class="fa-solid fa-tag"></i>{{ . }}
+                          </a>
+                        </li>
+                      {{- end }}
+                    {{- end }}
+                  </ul>
+                  <time>{{ .Date.Format (default "January 2, 2006" $.Site.Params.dateFormat) }}</time>
+                </li>
+              </ul>
+            {{- end }}
+          </li>
+        {{- end }}
+      </ul>
+    </section>
+  </div>
+{{ end }}

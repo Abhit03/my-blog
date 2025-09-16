@@ -1,0 +1,10 @@
+# Hugo output
+/public/
+/resources/
+
+# OS cruft
+.DS_Store
+**/.DS_Store
+
+# Node (if you ever use PostCSS/JS tooling)
+node_modules/

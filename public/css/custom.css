@@ -10,16 +10,26 @@
 }
 
 .article-title {
-  font-weight: 500; 
+  font-weight: 400; 
 }
 
 .article h2 {
+  font-weight: 500;
+  font-size: 1.4em;
+}
+
+.article h3 {
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 .article strong {
   font-weight: 600;  
+}
+
+.article img {
+  border: none;
+  padding: none;
 }
 
 .terms > ul > li {
