@@ -8,3 +8,5 @@
 
 # Node (if you ever use PostCSS/JS tooling)
 node_modules/
+
+/scratch/
