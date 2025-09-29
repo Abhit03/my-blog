@@ -1,107 +1,87 @@
 +++
-title = "Machine Learning Playground"
+title = "Building a Machine Learning Playground"
 author = "Abhit"
 date = 2022-03-04
-tags = ["cern", "cms"]
-categories = ["projects"]
+tags = ["cern", "machine-learning", "infrastructure"]
+categories = ["projects", "CERN"]
 +++
 
-In the CMS experiment at CERN, huge amounts of collision data are collected every day. To make sure this data can be trusted for physics analyses, CMS relies on a process called **Data Quality Monitoring (DQM)**.  The DQM software looks at raw detector data and produces simple **summaries** called *monitor elements* which include:  
-- Histograms of the sensor signals.  
-- Basic statistics about detector performance.  
-- Plots that help spot unusual behavior.  
+At CERN’s CMS experiment, data quality has traditionally been certified by human operators reviewing run after run. However, with the increasing volume of data, this manual process is becoming a bottleneck, paving the way for machine learning to take a more prominent role.
 
-Operators, known as **shifters**, and more experienced supervisors (shift leaders) examine these outputs using a web interface called the **DQMGUI**. Based on what they see, they make a final **certification decision** about whether a dataset is good enough for physics analysis. These results are stored in the **Run Registry**, the official database of certified data.
+To ensure datasets are reliable for physics analyses, the CMS collaboration uses Data Quality Monitoring (DQM) software. This software analyzes raw detector output and generates concise summaries, known as monitor elements. These include histograms of sensor signals, basic statistics about detector performance, and plots that highlight unusual or unexpected behavior.
 
-To make this process smoother, we developed the **Certification Helper (Certhelper)** web app. It guided shifters and shift leaders through checklists and forms to certify data at the **run level**, where a run might last from a few minutes up to a few hours.  
+<!--more--> 
+## Human Certification
+Operators, known as shifters, along with more experienced shift leaders, review the DQM outputs through a web interface called the DQM GUI. Based on their observations, they decide whether a dataset is reliable enough for physics analysis. The outcome of this review is recorded in the Run Registry, the official database of certified data.
 
-However, over time, the community wanted to certify data at a much finer granularity: the **lumisection level**. A lumisection is a 23-second block of data inside a run. Since a run can contain hundreds of lumisections, this dramatically increases the number of items to be checked. Manual certification at this scale quickly became impossible.
+To support this work, we developed the Certification Helper web application. It streamlines the process by guiding shifters and shift leaders through structured checklists and forms to certify data at the run level, where a run can last anywhere from a few minutes to several hours.
 
-The proposed solution was to use **machine learning and statistical models** to support or automate parts of the process.  Examples include:  
-- **Reference runs:** a “gold standard” dataset chosen by supervisors that represents how the detector should look when everything is working. New data can then be compared automatically against this reference.  
-- **Automatic flagging:** models that suggest whether a lumisection is “GOOD” or “BAD,” reducing the manual effort needed from operators.  
+#### Beyond Human Scale
+However, over time, the community wanted to certify data at a much finer granularity: the lumisection level. A lumisection represents a 23-second block of data within a run, and since a single run can contain hundreds of lumisections, the number of items to be checked grew dramatically. At this scale, manual certification was no longer practical.
 
-### Who uses it?
-- **Operators (shifters):** Instead of checking thousands of plots one by one, they can rely on model suggestions to focus only on suspicious data.  
-- **Supervisors (shift leaders):** Use model outputs as decision support when selecting reference runs or validating final results.  
-- **Researchers / ML developers:** Contribute by building and testing new models on past annotated data, benchmarking them to see which approaches work best.  
+## Scaling with Machine Learning
+This surge in data volume opened the door for Machine Learning (ML) models to support, and in some cases automate, key parts of the process. For example, recommendation models can analyze detector behavior to suggest candidate gold standard runs for supervisors to review and approve. Automatic flagging models can indicate whether a lumisection is good or bad, reducing the amount of manual inspection required.
 
-### What the ML Playground does
-To tackle the challenge of certifying data at the much finer lumisection level, we created the **ML Playground (also called DQM Playground)**. It is designed as a **Kaggle-like platform**, but specialized for CMS data certification.  
+Different groups within CMS benefit in complementary ways. Operators can focus their attention on data flagged as potentially problematic rather than scanning thousands of plots. Supervisors review model-suggested reference runs and confirm final certification results. Researchers and ML developers design and test new models on annotated data, benchmarking approaches to identify the most effective ones.
 
-The platform provides:  
-- **Centralized datasets:** large collections of past runs and lumisections that have already been certified by humans serving as the “ground truth”.  
-- **Standardized tasks:** predefined training and testing splits, so everyone evaluates their models on the same data.  
-- **Model submissions:** researchers upload their predictions, which are automatically scored against the ground truth.  
-- **Leaderboards:** results are ranked to allow fair, transparent comparison across methods.  
-- **APIs & CLI tools:** Programmatic access ensures that experiments are reproducible and can be integrated into external workflows.  
-- **Visualization:** histograms, statistics, and correlations can be explored through the web interface to better understand both data and model behavior.  
+#### Fragmented Beginnings
+Yet despite these advances, ML efforts for DQM remained fragmented. Researchers relied on arbitrary datasets. Baseline models were missing. Labeling criteria were inconsistent. And many models overlooked the fact that detector behavior changes over time.
 
-### Impact
-Before the ML Playground, efforts in machine learning for DQM were scattered and inconsistent: 
-- Researchers used different, sometimes arbitrary datasets.  
-- There were no baseline models to serve as reference points.  
-- Criteria for deciding whether a lumisection was GOOD or BAD were not standardized.  
-- Models often ignored the fact that detector behavior evolves.  
 
-The ML Playground directly addresses these issues by:  
-- Standardizing data access and ensuring results are reproducible.  
-- Offering baseline tasks and models so newcomers have a starting point.  
-- Enabling the community to compare approaches side by side on equal footing.  
-- Providing a pathway for successful models to be integrated into operator workflows, reducing manual workload and making lumisection-level certification feasible.  
+## Organizing ML Efforts
+
+To tackle the challenges of lumisection-level certification, I conceptualized the ML Playground and led its design and development. Conceived as a Kaggle-style platform but explicitly tailored for CMS data certification, it introduces structured datasets and tasks to ensure fair and consistent model evaluation.
+
+- **Centralized datasets**: Curated collections of past runs and lumisections, already certified by humans, that serve as the "ground truth."  
+- **Standardized tasks**: Predefined training and testing splits so that all models are evaluated consistently.  
+- **Model submissions**: Researchers can upload predictions that are scored against the ground truth.  
+- **APIs and CLI tools**: Programmatic access makes experiments reproducible and easy to integrate with external workflows.  
+- **Visualization**: Histograms, statistics, and correlations can be explored through the web interface to gain a better understanding of both the data and model performance.  
+  
+By providing these shared resources and benchmarks, the ML Playground aims to transform a fragmented set of efforts into a coherent community platform. It has created a common ground where researchers could compare approaches fairly and successful models could be prepared for integration into operator workflows.
+
+ 
+## Outlook
+
+The ML Playground has brought order and consistency to DQM efforts by standardizing data access and evaluation, making results reproducible and directly comparable. As a core developer, I helped bridge the gap between end-user needs and technical implementation, laying the groundwork for structured machine learning efforts. Today, the platform supports reproducible research and provides a clear path for integrating successful models into operator workflows, making lumisection-level certification more efficient and opening the door to further automation at the CMS experiment.
 
 ---
+## Appendix: Architecture
 
-### Technical Overview of ML Playground
+The ML Playground is built on a modular architecture that combines a modern web framework, a relational database, programmatic interfaces, and a scalable deployment environment.  
 
-1. **Web Framework**
+1. **Web Framework**  
    - **Technology:** Django (Python web framework).  
-   - **Usage:** Leverages Django’s ORM and app structure to build the platform.  
-   - **Models:** Represent core entities such as:  
-     - Runs, lumisections, histograms (1D/2D).  
-     - Tasks (training/testing datasets).  
-     - Predictions (submitted model outputs).  
-   - **Templates:** Power the web UI for:  
-     - Run and lumisection summaries.  
-     - Histogram and time-series visualizations.  
-     - Task and prediction comparisons.  
-
-2. **Database**
+   - **Features provided by Django:**  
+     - **Models:** Capture entities such as runs, lumisections, histograms (1D/2D), tasks (training/testing datasets), and predictions (submitted model outputs).  
+     - **Templates & Views:** Render web pages for browsing datasets, viewing histograms, and comparing model predictions.  
+     - **Django REST Framework (DRF):** Exposes datasets, tasks, and predictions as JSON endpoints for programmatic access.  
+   - **Why Django?**  
+     - Mature, widely used in research/enterprise environments.  
+     - Provides an integrated ORM, authentication, and admin interface.  
+     - Easy to extend with APIs and tools for ML developers.  
+     - Clear modular structure: each component is developed as its own app (e.g., `datasets`, `tasks`, `predictions`, `visualization`).  
+2. **Database**  
    - **Technology:** Relational DB (PostgreSQL).  
-   - **Purpose:** Stores runs, lumisections, histograms, tasks, and prediction metadata.  
-   - **Capabilities:**  
-     - Provides a structured, queryable abstraction over raw DQM outputs (CSV/ROOT files).  
-     - Ensures reproducibility — the same dataset split can always be regenerated for users.  
-
-3. **APIs and CLI**
-   - **REST API:** Django REST Framework exposes datasets, tasks, and predictions in JSON format.  
-   - **Internal CLI:** Management commands for ETL (extract-transform-load), converting CSV/ROOT files into structured database entries.  
-   - **External CLI:** Allows users to query tasks, download datasets, and submit predictions directly from scripts or notebooks.  
-
-4. **Deployment Platform**
+   - **Purpose:** Stores metadata for runs, lumisections, histograms, training/testing tasks, and submitted predictions.  
+   - **Django ORM:** Maps Python classes (e.g., `Run`, `Lumisection`, `Task`, `Prediction`) to relational tables.  
+   - **PostgreSQL:** Chosen for scalability, durability, and alignment with CERN infrastructure.  
+   - **Why a database?**  
+     - Enables reproducibility by keeping training/testing splits fixed and queryable.  
+     - Relationships are essential (e.g., a prediction links to a model, dataset split, and evaluation metric).  
+     - Supports consistency and auditing, ensuring submitted predictions can be compared and re-scored reliably.  
+3. **APIs and CLI Tools**  
+   - **REST API:** Built on DRF, provides structured access to datasets, tasks, and predictions.  
+   - **Internal CLI:** ETL (Extract, Transform, Load) tools convert raw DQM outputs (CSV/ROOT files) into structured DB entries.  
+   - **External CLI:** Enables researchers to download datasets, submit predictions, and query evaluation results from scripts or notebooks.  
+   - **Why APIs/CLI?**  
+     - Makes experiments reproducible and automatable.  
+     - Supports integration with external ML workflows (e.g., PyTorch, TensorFlow pipelines).  
+     - Provides a clean separation between the backend and client-side tools.  
+4. **Deployment Platform**  
    - **Technology:** OpenShift (Kubernetes-based at CERN).  
-   - **Packaging:** All components are containerized with Docker (web app, REST API, supporting services).  
+   - **Packaging:** Each service (web app, API, worker) containerized with Docker.  
    - **Why Kubernetes/OpenShift?**  
-     - Scales as more users upload models or query data.  
-     - Manages secrets and configuration securely.  
-     - Provides high availability and automated restarts.  
-
-
----
-
-### Summary
-- Django provides rapid prototyping and clear structure.  
-- PostgreSQL ensures consistency and scalability of stored datasets.  
-- REST + CLI enable reproducibility and integration with external ML workflows.  
-- OpenShift/Kubernetes ensures the platform can grow and remain reliable.  
-
-**Architecture**
-- **Frontend:** Django templates + Altair/JS for visualization.  
-- **Backend:** Django apps representing runs, lumisections, tasks, predictions, histograms.  
-- **Database:** PostgreSQL (persistent store for data, tasks, results).  
-- **APIs:** Django REST endpoints for programmatic access.  
-- **CLI:** For data ingestion and user interaction.  
-- **Deployment:** Dockerized services on OpenShift/Kubernetes.  
-
-
-
+     - Scales seamlessly as more users upload models or query data.  
+     - Manages configuration, secrets, and scaling automatically.  
+     - Provides high availability with monitoring, automated restarts, and rolling updates. 

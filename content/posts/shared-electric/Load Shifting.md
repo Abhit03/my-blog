@@ -28,7 +28,7 @@ With these foundations in place, we developed an algorithm to identify the exact
   <img src="/images/load_profile.png" alt="Shifting Tool" width="100%">
   <br>
   <em>
-    <a href="/demo/shifting-calculator/" target="_blank">The interactive tool</a>
+    <a href="/demo/shifting-calculator/" target="_blank">The interactive tool</a> that shows cost savings from shifting energy demand.
   </em>
 </p>
 

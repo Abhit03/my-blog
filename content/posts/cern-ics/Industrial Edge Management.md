@@ -1,97 +1,35 @@
 +++
-title = "Deploying Edge Computing Platform on K8s"
+title = "Edge Computing Platform on Kubernetes"
 author = "Abhit"
 date = 2024-06-14
-tags = ["cern", "ics"]
-categories = ["projects"]
+tags = ["cern", "edge-computing", "infrastructure"]
+categories = ["projects", "CERN"]
 +++
 
-Imagine a factory or laboratory full of machines, each with its own sensors and controllers. Traditionally, all data from these devices is sent back to central servers for processing, but this can create delays and bottlenecks. **Industrial Edge computing** changes this by running applications directly close to the machines.  
-
+Imagine a factory or research laboratory filled with machines, each equipped with its own sensors and controllers. Traditionally, data from these devices is sent to central servers for processing. While effective, this approach often introduces delays and network bottlenecks. Industrial Edge Computing addresses the problem by bringing computation closer to where data is generated. Instead of relying on distant servers, applications run directly on edge devices installed near the equipment, allowing for real-time decision-making. These industrial PCs can host applications that collect diagnostics, perform analytics, or even take direct control of equipment. For example, a ventilation system can adjust airflow more efficiently by running advanced control algorithms locally on an edge device using nearby sensor readings.
 <!--more--> 
-At CERN, this means that small industrial PCs called **Edge Devices** can host apps that collect diagnostics, run analytics, or even control equipment locally. For example:  
-- A ventilation system can adjust airflow in real time based on local sensor data.  
-- An energy-optimization app can decide how to run motors more efficiently without waiting for instructions from central IT.  
 
-But managing hundreds of such Edge Devices across CERN requires a central “control tower.” This is where **Industrial Edge Management (IEM)** comes in:  
-- IEM is a management platform (a web-based dashboard and backend) that lets administrators onboard new devices, deploy apps to them, update software, manage certificates, and monitor their health.  
-- In short, if Edge Devices are like the “workers” doing local computing, then IEM is the “manager” that coordinates them all.  
+However, deploying hundreds of Edge Devices across CERN introduces a new challenge: how to coordinate and manage them effectively. This is where Industrial Edge Management (IEM) comes in. Acting as a central "control tower," IEM provides a web-based dashboard and back end that enable administrators to onboard new devices, deploy and update applications, and monitor system health, all from a single location.
 
-Deploying IEM inside CERN’s private cloud required combining two major infrastructure layers:  
-- **OpenStack**: used to create the virtual machines where IEM runs.  
-- **Kubernetes**: used to orchestrate the containers that make up the IEM platform and keep them running reliably.  
+At CERN, building this management platform inside the cloud meant bringing together several infrastructure layers. OpenStack provided the virtual machines to host IEM, while Kubernetes orchestrated the containers running on those machines, ensuring that its applications remained consistent and reliable.
 
-### Problem Statement
-The challenge was to set up Siemens Industrial Edge Management (IEM) on CERN’s OpenStack cloud from scratch.  
-This included:  
-- Choosing the right deployment tools and workflow.  
-- Guiding team members through key Kubernetes concepts for those unfamiliar with the platform.
-- Creating a step-by-step, reproducible deployment method.  
-- Integrating with CERN’s existing services (networking, DNS names, security certificates).  
+## Deployment on Private Cloud
 
----
+The task was to set up Siemens Industrial Edge Management (IEM) on CERN's OpenStack cloud entirely from scratch. Doing so came with several challenges: selecting the right deployment tools and workflow, bringing team members up to speed with Kubernetes concepts and practices, creating a reliable and reproducible step-by-step method, and ensuring seamless integration with other existing services, including networking, DNS, and security certificates.
 
-### Implementation Steps
+We carried out the deployment through a series of structured steps, moving from infrastructure setup to a fully operational platform.
 1. **Provisioning an Operator VM on OpenStack**  
-   - Created a Linux virtual machine using the OpenStack command-line tools.  
-   - Attached extra storage volumes and mounted them on the VM.  
-   - Installed the required utilities such as the OpenStack client, `kubectl` to interact with Kubernetes, and `helm` for packaging apps.  
+Using OpenStack command-line tools, we created a Linux VM, attached additional storage, and installed key utilities such as the OpenStack client, kubectl, and Helm. This machine served as the foundation for building and managing the Kubernetes environment.
 
 2. **Setting up a Kubernetes cluster**  
-   - Used OpenStack’s Magnum service to spin up a Kubernetes cluster.  
-   - Verified that master and worker nodes were healthy.  
-   - Assigned DNS names to worker nodes via CERN’s network services so they could be reached easily.  
+With OpenStack's Magnum service, we deployed a Kubernetes cluster and verified that the controller and worker nodes were healthy. Worker nodes were assigned DNS names through CERN's network services, ensuring accessibility and stability.
 
 3. **Certificates and Security**  
-   - Downloaded CERN’s root and intermediate security certificates.  
-   - Built a certificate chain to ensure that all communication with the cluster was encrypted and trusted.  
-   - Added these certificates as Kubernetes secrets, enabling secure HTTPS connections to the IEM service.  
+CERN's root and intermediate certificates were integrated into the cluster as Kubernetes secrets, enabling secure HTTPS communication. This step ensured compliance with CERN's strict security standards and protected sensitive operations.
 
 4. **Installing Industrial Edge Management**  
-   - Installed IEM using the **IE Provision CLI**, a wrapper around `helm` that simplifies setup.  
-   - Configured settings such as hostname, storage classes, and certificate paths.  
-   - Confirmed that the IEM dashboard was running and accessible through CERN’s internal network.  
-   - Connected the local IEM with Siemens’ central cloud service (IE Hub).  
-   - This allowed devices at CERN to be managed locally but also remain linked to Siemens’ ecosystem.  
+Finally, we deployed IEM using the IE Provision CLI (a wrapper around Helm), configuring parameters such as hostname, storage classes, and certificate paths. Once verified on CERN's internal network, the local IEM was linked to Siemens' central IE Hub, enabling CERN to manage its devices locally while remaining connected to Siemens' global ecosystem.
 
-### Impact
-- Introduced **Industrial Edge concepts** to CERN’s industrial controls systems group.  
-- Provided a **scalable and reproducible deployment method** that others can follow.  
-- Served as a **practical introduction to Kubernetes and Helm** in an industrial context.  
-- Created a solid foundation for future **edge computing experiments and use cases** at CERN.  
+## Laying the Groundwork
 
----
-
-### Summary
-- OpenStack provides flexible cloud resources inside CERN’s infrastructure.  
-- Kubernetes ensures applications keep running and scale when needed.  
-- Helm and IE Provision CLI simplify installation and updates.  
-- Certificates and DNS integration provide production-grade security and accessibility.  
-
-1. **Infrastructure**
-   - **Platform:** CERN’s private cloud (OpenStack) hosts the virtual machines.  
-   - **Storage:** Extra storage provided by Ceph volumes.  
-   - **Networking:** DNS aliases assigned via CERN’s LANDB system.  
-
-2. **Orchestration**
-   - **Cluster creation:** Built with OpenStack Magnum.  
-   - **Nodes:** Master and worker nodes run as virtual machines.  
-   - **Resources:** Pods, Services, Deployments, Ingress (for external access), ConfigMaps, and Secrets.  
-   - **Deployment:** Applications packaged and deployed with Helm charts.  
-
-3. **Security**
-   - **Certificates:** CERN’s internal certificate authority integrated into the cluster.  
-   - **TLS secrets:** Stored as Kubernetes secrets for encrypted traffic.  
-
-4. **Deployment Tools**
-   - **IE Provision CLI:** Simplified installer for IEM.  
-   - **IECTL:** Command-line client to connect IEM to Siemens cloud (IEHub).  
-   - **kubectl + helm:** Standard Kubernetes management tools.  
-
-**Architecture**
-- **Operator VM:** Ubuntu machine running CLI tools for cluster creation and IEM install.  
-- **Orchestration Layer:** OpenStack Magnum provisions K8s master and worker nodes.  
-- **Cluster Layer:** Kubernetes orchestrates the IEM containers.  
-- **Access Layer:** Ingress with TLS certificates provides secure access to the IEM dashboard.  
-
-
+This work had an impact not only within the technical team but also on CERN's broader approach to industrial computing. It introduced Industrial Edge concepts to the Industrial Controls Systems group, opening new possibilities for managing equipment closer to where data is generated. The project also established a scalable and reproducible deployment method that other teams can adopt, while providing team members with hands-on experience with Kubernetes and Helm in an industrial context. Most importantly, it created a strong foundation for future edge computing experiments and potential use cases across CERN. Together, these outcomes went beyond solving the immediate task of deploying Industrial Edge Management, positioning CERN to explore wider opportunities in industrial edge computing.

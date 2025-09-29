@@ -2,44 +2,42 @@
 title = "Control Algorithm on Edge"
 author = "Abhit"
 date = 2023-10-07
-tags = ["cern", "ics"]
-categories = ["projects"]
+tags = ["cern", "control-system", "edge-computing"]
+categories = ["projects", "CERN"]
 +++
 
-At CERN, large technical systems such as cooling plants, ventilation systems, and safety installations must operate continuously around the clock. These systems are controlled by programmable logic controllers (PLCs). PLCs are specialized industrial computers designed to execute the same instructions continuously and reliably, often for years without interruption. Built with safety and stability in mind, they serve as the backbone of industrial automation. <!--more--> 
-For example, they can:
-- Control pumps that circulate cooling water for accelerators.
-- Adjust ventilation fans to ensure underground tunnels are safe to enter.
-- Activate interlocks that immediately shut down equipment if unsafe conditions are detected.
+Large technical systems such as cooling plants, ventilation systems, and safety installations must operate continuously around the clock. These systems rely on programmable logic controllers (PLCs), specialized industrial computers built to execute precise instructions reliably for years without interruption. Designed with safety and stability in mind, PLCs form the backbone of industrial automation. They manage essential functions, such as circulating cooling water for accelerators, adjusting ventilation fans to maintain safe conditions in underground tunnels, and activating interlocks to shut down equipment immediately if unsafe conditions are detected.
 
-The control logic inside a PLC is usually based on **simple feedback rules**. A common example is:  *“If the temperature goes above a threshold, increase the fan speed; if it drops too low, reduce the fan speed.”* These rules, often implemented as PID controllers, work well for straightforward, repetitive tasks. But they fall short when situations become more complex, such as when:  
-- Multiple variables like temperature, humidity, and energy cost interact 
-- Future conditions need to be anticipated
-- There are competing goals, such as comfort vs. energy efficiency.  
+The logic inside a PLC is usually based on simple feedback rules. A typical example would be: “If the temperature rises above a threshold, increase the fan speed. If it falls too low, reduce the fan speed.” These rules, often implemented as PID controllers, are highly effective for straightforward, repetitive tasks. However, they struggle in more complex situations, for example, when multiple variables, such as temperature, humidity, and energy cost, interact. It also arises when future conditions must be anticipated or when competing objectives, such as comfort and energy efficiency, need to be balanced. These limitations underscore the need for more advanced control strategies.
 
-### A more advanced method: Model Predictive Control
-To handle such complexity, control engineers use **Model Predictive Control (MPC)**.  
-- MPC builds a **mathematical model** of the system (e.g., how temperature will change if fan speed is adjusted).  
-- It **predicts future behavior** of the system over the next minutes or hours.  
-- It then **chooses the optimal control actions** that minimize cost like energy consumption, while still respecting limits such as safety margins or comfort requirements.  
+## Advanced control method
+One such approach is Model Predictive Control (MPC). To handle complexity beyond simple rules, control engineers use MPC to:
+- Build a mathematical model of the system, e.g., how the temperature will change if the fan speed is adjusted.
+- Predict the system’s future behavior over the next minutes or hours.
+- Select the optimal control actions that minimize costs, such as energy consumption, while still meeting safety margins or comfort requirements.
 
-This makes MPC significantly smarter and more efficient than traditional methods. For instance, an MPC controller managing a ventilation system can proactively increase fan speed before a large group enters a hall, instead of waiting for CO₂ sensors to signal a problem.
+Compared to traditional methods, MPC is a leap forward in terms of efficiency and intelligence. For instance, a ventilation system managed with MPC can anticipate rising CO₂ levels and increase fan speed before a large group enters a hall, instead of waiting for sensors to trigger a response. This showcases the potential for significant optimization in industrial systems.
 
-### Why not just run MPC on PLCs?
-The drawback is that MPC is **computationally demanding**. Solving optimization problems in real time requires far more computing power than a PLC can provide. This is where **Industrial Edge Devices** come in. These small industrial PCs are located near the equipment and connect to the same network as the PLCs. They are powerful enough to run complex algorithms like MPC. Because they operate at the 'edge' (directly beside the machines), they can make quick decisions without sending all raw data to distant central servers.
+## Industrial Edge Computing
+The main limitation is that MPC is computationally demanding, as solving optimization problems in real-time requires significantly more processing power than a PLC can provide. Industrial Edge Devices fill this gap. These small industrial PCs, installed close to the equipment and sharing the same network as the PLCs, offer significantly greater processing capacity. They can run advanced algorithms, such as MPC, while operating at the edge, close to the machines, which enables fast decisions without transmitting large volumes of raw data to remote servers. In this setup, PLCs continue to provide the dependable backbone for safety and routine control, while the Edge Devices handle the more complex and computationally intensive tasks, such as running the MPC algorithm.
 
-In other words:  
-- **PLCs** remain the reliable backbone for safety and routine control.  
-- **Edge Devices** provide the intelligence needed for advanced optimization, bridging the gap between central computing and field-level control.  
+To put MPC into action, we tested it on an Air Handling Unit within CERN’s HVAC system. The goal was to run and evaluate the algorithm on an Industrial Edge Device, rather than on a powerful server. While effective in theory, the algorithm proved too resource-intensive to execute in real time on such limited hardware. The challenge, therefore, was to redesign the deployment and optimize performance so the MPC could operate reliably within the device’s constrained capacity. 
 
-### Problem Statement
-- **Goal:** Execute and test an **MPC algorithm** for an Air Handling Unit (part of CERN’s HVAC system) directly on an Industrial Edge Device.  
-- **Challenge:** While theoretically effective, the algorithm was too resource-intensive to run in real time on a small industrial PC without optimization.
-- **Task:** Redesign the deployment and optimize performance so the algorithm can run reliably within the device’s limited computing resources.  
+## Deployment
+To run the MPC reliably on the edge, we followed a series of implementation steps. First, we prepared the Industrial Edge Device with the necessary apps to handle communication with PLCs, exchange messages internally, and provide operators with dashboards and visualization tools. This involved installing and configuring the necessary software components. Next, we packaged the MPC algorithm into a deployable application using a toolchain that turned the Python code into an app ready to run on the device. We then optimized the code for the device’s limited hardware, fine-tuning the optimization libraries and solvers until performance was fast enough for real-time use. This optimization process involved identifying and eliminating bottlenecks in the code. Finally, we validated the system at scale by running tens of thousands of test scenarios on an HPC cluster, ensuring the approach was robust under realistic conditions. This validation step was crucial to ensure the reliability and effectiveness of the MPC algorithm in real-world conditions.
+
+
+
+## Impact
+We demonstrated that advanced algorithms can run directly on industrial PCs at the edge, moving beyond research prototypes or centralized servers. In doing so, we achieved measurable energy savings in CERN’s HVAC operations, a significant outcome given the scale of its infrastructure.
+
+The work also underscored how edge computing naturally bridges two worlds: control engineers, who focus on PLC reliability, and data scientists, who bring modern optimization tools. Our project showed how these perspectives can converge in practice.
+
+Finally, we established a repeatable process for packaging, deploying, and monitoring such functions in a production-like environment. By optimizing and validating the algorithm on real hardware, we proved that MPC can move from theory to reliable, real-world deployment, paving the way for smarter, more efficient industrial control at CERN and beyond.
 
 ---
 
-### Implementation Steps
+## Appendix: Implementation Details
 1. **Setting up the Edge Device**  
    - Installed Siemens apps to handle communication:  
      - **S7 Connector**: talks to PLCs.  
@@ -66,56 +64,5 @@ In other words:
    - Achieved execution times of under ~17 seconds for 95% of cases — fast enough for practical use.  
 
 4. **Validation at Scale**  
-   - Tested the system with ~28,000 input scenarios on CERN’s HPC cluster to mimic real workloads using the SLURM framework.  
-   - Identified rare cases where the solver failed or was too slow and proposed fallbacks (e.g., temporarily handing control back to the PLC).  
-   - Results were published as a **peer-reviewed paper and poster** at an international conference.  
-
-### Impact
-- Showed that **advanced algorithms** can be deployed on industrial PCs at the edge — not just in research code or central servers.  
-- Enabled **energy savings** in HVAC operations, which is critical given the scale of CERN’s infrastructure.  
-- Brought together two communities:  
-  - **Control engineers**, who work with PLCs and industrial reliability.  
-  - **Data scientists**, who use modern Python libraries and optimization frameworks.  
-- Created a **repeatable process (DevOps for Edge)** for packaging, deploying, and monitoring the functions in a production-like environment.  
-
----
-
-### Summary
-- Edge devices bring computation closer to the process, reducing latency and dependence on central servers.  
-- Containerization ensures apps can be redeployed and scaled consistently.  
-- Siemens’ Template Framework standardizes packaging and makes lifecycle management easier.  
-- Optimization + validation ensured the algorithm wasn’t just theoretically correct but **practically usable on small industrial hardware**.  
-
-1. **Edge Device**
-	- **Hardware:** Siemens Industrial PC (small, rugged, factory-ready computer).  
-	- **OS & Runtime:** Debian-based Linux with Siemens Industrial Edge Runtime.  
-	- **Apps:** MPC algorithm, PLC connectors, dashboards — all deployed as Docker containers.  
-
-2. **Communication**
-	- **Between PLC and Edge:** S7 Connector + MQTT broker.  
-	- **Between Edge and User:** Node-RED dashboards for quick visualization.  
-	- **Data Logging:** InfluxDB database with Grafana dashboards for monitoring.  
-
-3. **Deployment Pipeline**
-	- **Template Framework:**  
-		  - SDK to mark stages in Python notebooks.  
-		  - Builder to turn them into packaged apps.  
-		  - Runtime on the device to execute them.  
-	- **FTP:** Used to upload packaged apps.  
-	- **MQTT:** Used to invoke the functions.  
-	- **Web UI:** Operator dashboards for monitoring.  
-
-4. Optimization
-	- **Libraries:** CasADi (math library for optimization).  
-	- **Solvers:** IPOPT (default nonlinear solver), with options to test CPLEX and Gurobi (commercial solvers).  
-	- **Techniques:** Warm start, parallelization, and CPU-specific builds.  
-	- **Validation:** Tested with thousands of scenarios on HPC clusters before deployment.  
-
-**Architecture**
-- **Field layer:** Sensors, actuators, PLCs.  
-- **Edge layer:** Siemens Edge Device running the MPC algorithm and connector apps.  
-- **Management layer:** Industrial Edge Management for managing the Edge devices and apps.  
-- **Visualization layer:** Grafana dashboards and Node-RED panels.  
-- **Validation layer:** HPC cluster for large-scale testing before going live.  
-
-
+   - Tested the system with ~28,000 input scenarios on an HPC cluster to mimic real workloads using the SLURM framework.  
+   - Identified rare cases where the solver failed or was too slow and proposed fallbacks (e.g., temporarily handing control back to the PLC). 

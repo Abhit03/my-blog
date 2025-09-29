@@ -6,7 +6,7 @@ tags = ["energy"]
 categories = ["projects", "shared-electric", "summary"]
 +++
 
-The transition to renewable energy is not only about adding more wind turbines or solar farms. It also requires making demand more flexible so that consumption can adjust to the availability of renewable power. At Shared Electric GmbH, I worked on three interconnected projects that demonstrated demand flexibility in action:
+The transition to renewable energy is not only about adding more wind turbines or solar farms. It also requires making demand more flexible so that consumption can adjust to the availability of renewable power. At [Shared Electric GmbH](https://sharedelectric.com/), I worked on three interconnected projects that demonstrated demand flexibility in action:
 1. Building a low-cost [IoT device](/posts/shared-electric/energy-monitoring) to measure household consumption.
 2. Developing an [interactive tool](/posts/shared-electric/load-shifting) to show the value of load flexibility.
 3. Designing a [demand-side management platform](/posts/shared-electric/demand-side-management) to connect utilities and consumers.
@@ -30,7 +30,7 @@ The next project explored how much household energy use could actually be shifte
 ## Scaling with People
 Finally, we explored how user engagement could make demand shifting work at scale, which led to the design of a demand-side management platform. On the utility side, it provided a dashboard for operators to request adjustments in demand. A backend system then identified which households were best positioned to provide that flexibility. On the consumer side, it offered an app where users could set personal goals and receive timely notifications. At the center was an analytics engine, which processed millions of consumption data points, grouped users by behavior, and tracked their responses. Together, these components demonstrated how utilities and households can coordinate in real-time to balance the grid.
 
-## Reflections
+## Takeaways
 
 With each project building on the last, we gained a few valuable lessons.
 

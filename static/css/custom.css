@@ -23,6 +23,11 @@
   font-size: 1.2em;
 }
 
+.article h4 {
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
 .article strong {
   font-weight: 600;  
 }
@@ -45,3 +50,5 @@
   margin-right: 3px;  
   vertical-align: middle;
 }
+
+.nutshell-sources { display: none; }

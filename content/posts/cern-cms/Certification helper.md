@@ -1,55 +1,73 @@
 +++
-title = "Certifying Data from Tracker Detector"
+title = "Ensuring Quality in CMS Tracker Data"
 author = "Abhit"
 date = 2022-01-22
-tags = ["cern", "cms"]
-categories = ["projects"]
+tags = ["cern", "monitoring", "web-app"]
+categories = ["projects", "CERN"]
 +++
 
-At CERN, the CMS experiment has a detector made up of many sub-detectors. One of the most important is the **tracker**, which works like a giant digital camera that records the paths of charged particles created in collisions. The tracker produces an enormous amount of data, and for physics analyses to be reliable, this data must be checked carefully for quality.  
+Every second, the CMS tracker detector records millions of particle trajectories. But without careful quality checks, this flood of data risks being unusable for physics discoveries. To guard against this, CMS relies on a dedicated Data Quality Monitoring (DQM) system. The tracker, functioning like a giant digital camera, captures the paths of charged particles produced during collisions. Because it generates such an enormous volume of data, ensuring quality is essential for 
+reliable physics analyses.
 
-This is where the **Data Quality Monitoring (DQM)** system comes in. The DQM software looks at the raw detector output and generates simplified summaries, known as *monitor elements*. These include:  
-- **Histograms** of sensor signals.  
-- **Basic statistics** about detector performance.  
-- **Plots** that highlight unusual behavior.  
+<!--more--> 
+## Certifying the Data
 
-These summaries are examined through a web interface called the **DQMGUI**. Based on what they see, the monitoring team decides whether a dataset is good enough for physics analysis. Their decisions are stored in the **Run Registry**, the official database of certified data. In this context, **data certification** means reviewing each run of data and confirming its quality. It is essentially a **quality assurance stamp** before the data is released for physics use.  
+The DQM software processes raw detector output and produces simplified summaries, known as monitor elements. These include histograms of sensor signals, basic statistics on detector performance, and plots that highlight irregular or unexpected behavior. Physicists examine these summaries through a web interface called the DQMGUI, where the monitoring team decides whether a dataset is suitable for physics analysis. Their decisions are then recorded in the Run Registry, the official database of certified data. In this process, data certification acts as a quality assurance stamp, ensuring that only trustworthy datasets are released for physics studies.
 
-### Who does the monitoring
-Certification is a human-driven process carried out in shifts. **Operators (shifters)** are on duty during data taking: they monitor the tracker in real time, follow checklists, and confirm the detector status. **Supervisors (shift leaders)**, who are more experienced, review these certifications, validate the results, and prepare the summary reports.  
+While the DQM system generates automated summaries, the final step of certification remains a human-driven process organized in shifts. Operators, or shifters, are on duty during data taking. They monitor the tracker in real time, follow detailed checklists, and confirm the detector's status. Their work is then reviewed by experienced supervisors (shift leaders), who validate certifications, ensure consistency, and prepare official summary reports.
 
-### What Certhelper does
-The **Certhelper web application** was created to support this workflow. It guides operators through certification forms with many fields automatically filled from other CMS services. It enforces checklists so no critical step is missed, and stores certifications in a central database. Supervisors can review or edit the results and designate certain runs as *reference runs*, which are trusted and serve as baselines for future comparisons. The app also generates maps and plots to visualize detector health and produces daily and weekly reports automatically.  
+## Streamlining Certification
 
-### Impact
-Before Certhelper, certification was a manual, repetitive, and error-prone task. Operators had to copy information between systems, and supervisors spent time on routine checks. With Certhelper, much of this process is automated. The tool saves time for both operators and supervisors, ensures consistency across hundreds of shifts, and guarantees that the physics results from CMS are based on high-quality, well-understood data.  
+To make this process more efficient, I helped develop the CertHelper web application. The tool streamlines certification by guiding operators through structured forms, with many fields automatically filled from other CMS services. This reduces manual entry and minimizes the risk of errors.
+
+CertHelper also enforces checklists to ensure that no critical step is overlooked and stores all certifications in a centralized database. Supervisors can review or edit entries and designate certain runs as reference runs, which then serve as trusted baselines for future comparisons.
+
+Beyond data entry and validation, the application provides visualization and reporting features. It generates maps and plots that illustrate detector health and automatically produces daily and weekly reports, giving the monitoring team a clear and consistent view of performance over time.
+
+
+## Impact
+
+Before CertHelper, certification was manual and error-prone, with operators copying information between systems and supervisors tied up in routine checks. With CertHelper, much of this work is automated. The tool saves time, enforces consistency across shifts, and builds confidence in the results, ensuring that the discoveries made at CMS are based on data that is both reliable and of high quality. 
+
 
 ---
 
-## Technical Overview
+## Appendix: Architecture
+
+```mermaid
+flowchart LR
+  U[Users] -->|HTTPS| R[OpenShift Ingress]
+
+  subgraph OS[Kubernetes / OpenShift]
+    R --> A[Django App]
+    A -->|ORM| DB[(PostgreSQL)]
+  end
+
+  SSO["CERN SSO (OIDC)"] -- Auth --> A
+  OMS[OMS API<br>Metadata] --> A
+  RR[Run Registry API] --> A
+```
 
 1. **Web Framework**
    - **Technology:** Django (Python web framework).  
    - **Features provided by Django:**  
-     - **Models:** Represent entities like certified runs, datasets, and checklists.  
+     - **Models:** Represent entities like certified runs, users and checklists.  
      - **Forms & Views:** Handle the certification process by allowing operators to fill in forms, ensuring the data is validated, and then storing it.  
      - **Admin Interface:** Enable administrators to configure checklists and roles.  
    - Why Django?  
      - Mature and well-supported.  
      - Batteries included (ORM, authentication, admin UI).  
      - Easy integration with APIs and CERN’s Single Sign-On user authentication.  
-     - Clear modular structure: each feature lives in its own “app” (e.g., `certifier`, `checklists`, `shiftleader`).  
 
 2. **Database**
    - **Technology:** Relational DB (PostgreSQL).  
    - **Purpose:** Stores certifications, user information, checklists, and reports.  
-   - **Django ORM:** Maps Python classes (`TrackerCertification`, `Dataset`, `User`) to database tables.  
+   - **Django ORM:** Maps Python classes (`TrackerCertification`, `User`) to database tables.  
    - **PostgreSQL:** Chosen for scalability, durability, and smooth integration with CERN infrastructure.  
    - Why a database?  
      - Certification data must be reliable and queryable, including details on who certified it, when it was certified, and with what status.  
      - Relationships matter, i.e., each certification links to a run, dataset, user, and possibly a “reference run”.  
      - Supports consistency and auditing by ensuring that no data is lost, and supervisors can restore deleted entries.  
-
 
 3. **Deployment Platform**
    - **Technology:** OpenShift (Kubernetes at CERN).  
@@ -66,21 +84,3 @@ Before Certhelper, certification was a manual, repetitive, and error-prone task.
    - **External APIs:**  
      - **OMS (Online Monitoring System):** Supplies run metadata and auto-fills certification forms.  
      - **Run Registry:** Provides the official certification database for cross-checks.  
-   - **Remote Execution:** Tracker map generation offloaded to CERN servers; triggered by Certhelper via SSH. Logs and updates are streamed back to users using Django Channels + Redis (WebSockets).  
-
----
-
-## Summary 
-- Django speeds up development and enforces a clean structure.  
-- PostgreSQL guarantees data consistency and durability.  
-- OpenShift/Kubernetes ensures scalability, security, and reliability.  
-- Integrations tie Certhelper seamlessly into CERN’s ecosystem.
-
-**Architecture**
-- **Frontend:** Django templates + Bootstrap, with custom JavaScript for interactivity.  
-- **Backend:** Django apps, each responsible for part of the workflow (certification form, checklists, shift-leader tools, reporting, etc.).  
-- **Database:** PostgreSQL (persistent storage of certifications and related data).  
-- **Deployment:** Containerized app running on OpenShift/Kubernetes with secrets, routing, and monitoring.  
-- **Integrations:** CERN SSO, and remote tracker-maps generation.  
-
-

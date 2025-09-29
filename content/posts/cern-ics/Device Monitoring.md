@@ -2,36 +2,34 @@
 title = "Monitoring Control Infrasturcuture at CERN"
 author = "Abhit"
 date = 2024-08-11
-tags = ["cern", "ics"]
-categories = ["projects"]
+tags = ["cern", "control-system", "monitoring"]
+categories = ["projects", "CERN"]
 +++
 
-At CERN, the operation of accelerators and experiments depends on thousands of technical devices working together. These range from:  
-- **PLCs (programmable logic controllers):** industrial computers that run control logic,  
-- **Power supplies:** that feed magnets and detectors,  
-- **Front-end controllers:** that handle communication between equipment and higher-level systems.  
+When thousands of devices power the world’s largest experiments, even a single failure can ripple across the system. At CERN, the smooth operation of accelerators and experiments relies on the control infrastructure, which comprises thousands of technical devices working in unison. These include programmable logic controllers (PLCs), which run industrial control logic, power supplies that feed magnets and detectors, and front-end modules that manage communication between equipment and higher-level systems. 
+<!--more--> 
 
-These devices are supplied by many different vendors, such as Siemens, Schneider, and Beckhoff, and each vendor provides its own way of reporting the device’s status or error messages.  
+These components come from vendors such as Siemens, Schneider, and Beckhoff. Each vendor, however, provides its own method for reporting status and error messages, resulting in a fragmented monitoring landscape. Until recently, operators could only view device health through flat dashboards, i.e., long tables or grids with thousands of entries. While these displays showed the state of each device individually, they did not convey the hierarchy or the relationships between devices. As a result, operators had to manually scan long lists to detect issues. When a device failed, it was not immediately clear how that fault affected the larger subsystem to which it belonged.
 
-Until recently, operators could only view device health in flat dashboards, i.e, a long table or grid with thousands of entries. While this showed the state of each device individually, it gave no sense of hierarchy or how devices were related to each other.  
+## Structured Monitoring
 
-This created challenges:  
-- If one device failed, it was not clear how that affected the larger subsystem it belonged to.  
-- Operators had to manually scan long lists of devices to detect issues.  
-- There was no intuitive way to see how local faults could escalate into larger problems.  
+To overcome the limitations of flat dashboards, I led the design of a web-based monitoring platform with the following capabilities:
+- **Organized tree structure**: Devices can be arranged in a hierarchy that mirrors CERN systems (e.g., device → subsystem → sector → accelerator).  
+- **Rule-based health status**: Users can define logical rules for groups, such as *“if any child device has an error, the parent node turns red.”*  
+- **Error propagation**: Faults cascade upward in the tree, allowing operators to see high-level health at a glance and then drill down to the specific device.  
+- **Scalable views**: The tree can be expanded or collapsed, allowing operators to start with a broad overview and zoom in only where necessary.  
 
-What was missing was a monitoring system that could show devices in their natural hierarchy from small components all the way up to major subsystems and, eventually, the entire CERN accelerator complex.
+The platform supports multiple modes of operation. In Design Mode, users can build or edit the tree, assign devices, and define the logical rules through a web interface. In Deploy Mode, the configuration of devices and rules is exported and pushed to the back-end system. In Monitor Mode, operators view the live device tree, with colors indicating status.
 
-### Problem Statement
-We set out to build a **hierarchical monitoring platform** where:  
-- Devices can be arranged in a tree structure that reflects how CERN systems are actually organized (e.g., device → subsystem → sector → accelerator).  
-- Users can define logical rules for groups, e.g., “if any child device has an error, the parent node turns red”.  
-- Errors propagate upward in the tree, so operators can instantly see high-level health and then drill down to the faulty device.  
-- The tree can be expanded or collapsed, letting operators start from a big-picture view and zoom in only where needed.  
+Beyond these core modes, the platform also supports Customization. Tree structures and device configurations can be imported or exported via JSON files, and users can define how device or group states are mapped to specific colors. This flexibility allows the system to adapt to different use cases and operator preferences.  
+
+## Insights
+
+The monitoring platform offers a way to explore more effective device health tracking at CERN. Instead of scanning thousands of devices individually, operators can now rely on a single top-level node to signal problems and guide further investigation. Customizable rules enable the system to adapt to various use cases. While we developed the platform for CERN’s control devices, the same approach can be applied to any large industrial environment where device health must be tracked across layers. The platform also lays the groundwork for advanced analytics and predictive diagnostics, enabling organizations to shift from reactive monitoring to proactive maintenance.
 
 ---
 
-### Application components
+## Architecture
 
 1. **Frontend (Web UI)**
    - **Framework:** React.  
@@ -56,24 +54,4 @@ We set out to build a **hierarchical monitoring platform** where:
      - Separates the deployment logic from the monitoring backend.  
      - Makes it easy to add other clients in the future (notifications, alternative dashboards, analytics).  
 
-### Functionality
-- **Design Mode:** Users build or edit the tree, assign devices, and define rules through a web interface.  
-- **Deploy Mode:** The defined configuration (devices + rules) is exported and pushed to the backend system.  
-- **Monitor Mode:** Operators see the live device tree in color e.g. green=OK, yellow=warning, red=error. Device states automatically flow upward to higher levels in the tree.  
-- **Customization:** Import or export tree structures and device configurations via JSON files, and define how device or group states are mapped to specific colors.
-- **Scalability:** The system handles thousands of nodes, and operators can easily collapse branches to focus on what matters.  
 
-### Impact
-- Operators no longer need to scan **thousands of devices one by one**.  
-- A single red node at the top level immediately signals a problem, guiding the operator to investigate further.  
-- Rules are customizable, so the system adapts to different use cases.  
-- While built for CERN’s control devices, the same approach applies to **any large industrial setup** where device health must be monitored in layers.  
----
-
-### Summary 
-
-**Architecture**
-- **Frontend:** React + Jotai for interactive tree visualization and rule editing.  
-- **Backend:** Go server to run monitoring logic, query devices, and apply rules.  
-- **Logic Engine:** OCaml engine to evaluate advanced logical rules.  
-- **Device drivers:** Drivers (C++) to query diagnostic data from PLCs.  
