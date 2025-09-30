@@ -24,6 +24,11 @@ CertHelper also enforces checklists to ensure that no critical step is overlooke
 
 Beyond data entry and validation, the application provides visualization and reporting features. It generates maps and plots that illustrate detector health and automatically produces daily and weekly reports, giving the monitoring team a clear and consistent view of performance over time.
 
+<p id="fig-shift-report" align="center">
+  <img src="/images/shift-report.png" alt="Shift Report" width="50%">
+  <br>
+  <em>Daily shift report generated automatically by CertHelper</em>
+</p>
 
 ## Impact
 
@@ -32,55 +37,37 @@ Before CertHelper, certification was manual and error-prone, with operators copy
 
 ---
 
-## Appendix: Architecture
+## Architecture
+ 
+The CertHelper architecture integrates web, database, and deployment layers with CERN's authentication and external APIs. The diagram below illustrates the connections between users, services, and data sources within the system.
 
 ```mermaid
 flowchart LR
   U[Users] -->|HTTPS| R[OpenShift Ingress]
 
   subgraph OS[Kubernetes / OpenShift]
-    R --> A[Django App]
+    R --> A["Django App (CertHelper)"]
     A -->|ORM| DB[(PostgreSQL)]
   end
 
   SSO["CERN SSO (OIDC)"] -- Auth --> A
-  OMS[OMS API<br>Metadata] --> A
-  RR[Run Registry API] --> A
+  OMS["OMS API<br>(Run metadata)"] --> A
+  RR["Run Registry API<br>(Official certified data)"] --> A
 ```
 
-1. **Web Framework**
+1. **Web Framework**  
    - **Technology:** Django (Python web framework).  
-   - **Features provided by Django:**  
-     - **Models:** Represent entities like certified runs, users and checklists.  
-     - **Forms & Views:** Handle the certification process by allowing operators to fill in forms, ensuring the data is validated, and then storing it.  
-     - **Admin Interface:** Enable administrators to configure checklists and roles.  
-   - Why Django?  
-     - Mature and well-supported.  
-     - Batteries included (ORM, authentication, admin UI).  
-     - Easy integration with APIs and CERN’s Single Sign-On user authentication.  
-
-2. **Database**
-   - **Technology:** Relational DB (PostgreSQL).  
-   - **Purpose:** Stores certifications, user information, checklists, and reports.  
-   - **Django ORM:** Maps Python classes (`TrackerCertification`, `User`) to database tables.  
-   - **PostgreSQL:** Chosen for scalability, durability, and smooth integration with CERN infrastructure.  
-   - Why a database?  
-     - Certification data must be reliable and queryable, including details on who certified it, when it was certified, and with what status.  
-     - Relationships matter, i.e., each certification links to a run, dataset, user, and possibly a “reference run”.  
-     - Supports consistency and auditing by ensuring that no data is lost, and supervisors can restore deleted entries.  
-
-3. **Deployment Platform**
+   - **Role:** Provides models to represent certified runs and users, forms for the certification process, and an admin interface for supervisors to manage checklists and roles.  
+   - **Why Django?** Mature, well-supported, and integrates smoothly with CERN’s authentication system.  
+2. **Database**  
+   - **Technology:** PostgreSQL (relational database).  
+   - **Role:** Stores certifications, user information, checklists, and reports in a reliable and queryable way.  
+   - **Why PostgreSQL?** Robust, scalable, and fits well with CERN’s infrastructure.  
+3. **Deployment Platform**  
    - **Technology:** OpenShift (Kubernetes at CERN).  
-   - **App Packaging:** Containerized as Docker images with code, dependencies, and runtime environment.  
-   - **Static Files:** Served via WhiteNoise within the container.  
-   - Why OpenShift/Kubernetes?
-     - Provides scalability by running multiple pods to support concurrent users.
-     - Manages secrets/configuration, e.g., DB credentials, API tokens, SSO secrets.  
-     - Offers routing/ingress for secure HTTPS access.  
-     - Ensures high availability by automatically restarting failed pods.  
-
-4. **Integrations & External Systems**
-   - **Authentication:** CERN Single Sign-On (SSO), integrated via OpenID Connect (OIDC) with Django AllAuth. Roles (operator/shift leader/admin) mapped from CERN groups.  
+   - **Role:** Runs the application in containers, ensures scalability and high availability, and manages secrets and configuration securely.  
+4. **Integrations**  
+   - **Authentication:** CERN Single Sign-On (SSO), mapping roles like operator, shift leader, and admin.  
    - **External APIs:**  
-     - **OMS (Online Monitoring System):** Supplies run metadata and auto-fills certification forms.  
-     - **Run Registry:** Provides the official certification database for cross-checks.  
+     - **OMS (Online Monitoring System):** Supplies run metadata and helps auto-fill certification forms.  
+     - **Run Registry:** The official database of certified data, used for cross-checks.  
